@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
+import User from './User';
+
 
 const users = [
   {
@@ -28,6 +30,13 @@ class App extends Component {
       users: JSON.parse(localStorage.getItem('users')),
     };
   }
+
+  componentWillMount(){
+    const users = this.state.users;
+
+    this.setState({users});
+  }
+
   render() {
     return (
       <div className="App">
@@ -35,17 +44,16 @@ class App extends Component {
           <h1 className="App-title">{this.state.title}</h1>
         </header>
         <div className="App-intro">
-          {
-            this.state.users.map(user => {
-              return(
-                <div>
-                <span>{user.name}</span>
-                 {' | '}
-                 <span>{user.memberType}</span>
-                </div>
-              )}
-            )
-          }
+        {
+          this.state.users.map(user => {
+            return(
+              <User
+                key={user.name}
+                {...user}
+              />
+            )}
+          )
+        }
         </div>
       </div>
     );

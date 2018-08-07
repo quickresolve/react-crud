@@ -29,12 +29,28 @@ class App extends Component {
       title: 'User Manager',
       users: JSON.parse(localStorage.getItem('users')),
     };
+    this.onDelete = this.onDelete.bind(this);
   }
 
   componentWillMount(){
-    const users = this.state.users;
+    const users = this.getUsers();
 
     this.setState({users});
+  }
+
+  getUsers(){
+    return this.state.users;
+  }
+
+
+  onDelete(name){
+    const users = this.getUsers();
+
+    const filteredUsers = users.filter(user => {
+      return user.name !== name;
+    })
+
+    this.setState({users: filteredUsers});
   }
 
   render() {
@@ -50,6 +66,7 @@ class App extends Component {
               <User
                 key={user.name}
                 {...user}
+                onDelete={this.onDelete}
               />
             )}
           )

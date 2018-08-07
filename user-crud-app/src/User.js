@@ -4,6 +4,14 @@ class User extends Component {
   constructor(props){
     super(props);
 
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+
+  onDelete(){
+      const {onDelete, name} = this.props;
+
+      onDelete(name);
   }
 
   render(){
@@ -12,7 +20,9 @@ class User extends Component {
       <div>
       <span>{name}</span>
        {' | '}
-       <span>{memberType}</span>
+      <span>{memberType}</span>
+       {' | '}
+      <button onClick={this.onDelete}>Delete</button>
       </div>
     )
   }

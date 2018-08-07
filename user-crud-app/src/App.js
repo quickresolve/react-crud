@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 import User from './User';
+import AddUser from './AddUser';
 
 
 const users = [
@@ -30,6 +31,7 @@ class App extends Component {
       users: JSON.parse(localStorage.getItem('users')),
     };
     this.onDelete = this.onDelete.bind(this);
+    this.onAdd = this.onAdd.bind(this);
   }
 
   componentWillMount(){
@@ -42,6 +44,16 @@ class App extends Component {
     return this.state.users;
   }
 
+  onAdd(name, memberType){
+    const users = this.getUsers();
+
+    users.push({
+      name,
+      memberType,
+    });
+
+    this.setState({users});
+  }
 
   onDelete(name){
     const users = this.getUsers();
@@ -60,6 +72,9 @@ class App extends Component {
           <h1 className="App-title">{this.state.title}</h1>
         </header>
         <div className="App-intro">
+        <AddUser
+          onAdd={this.onAdd}
+         />
         {
           this.state.users.map(user => {
             return(

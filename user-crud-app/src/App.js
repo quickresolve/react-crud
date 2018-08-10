@@ -32,6 +32,7 @@ class App extends Component {
     };
     this.onDelete = this.onDelete.bind(this);
     this.onAdd = this.onAdd.bind(this);
+    this.onEditSubmit = this.onEditSubmit.bind(this);
   }
 
   componentWillMount(){
@@ -65,6 +66,20 @@ class App extends Component {
     this.setState({users: filteredUsers});
   }
 
+  onEditSubmit(name, memberType, originalName) {
+   let users = this.getUsers();
+
+   users = users.map(user => {
+     if(user.name === originalName){
+       user.name = name;
+       user.memberType = memberType;
+     }
+
+     return user;
+   });
+   this.setState({users});
+ }
+
   render() {
     return (
       <div className="App">
@@ -75,6 +90,7 @@ class App extends Component {
         <AddUser
           onAdd={this.onAdd}
          />
+        <h3>Users</h3>
         {
           this.state.users.map(user => {
             return(
@@ -82,6 +98,7 @@ class App extends Component {
                 key={user.name}
                 {...user}
                 onDelete={this.onDelete}
+                onEditSubmit={this.onEditSubmit}
               />
             )}
           )
